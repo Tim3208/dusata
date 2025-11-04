@@ -4,11 +4,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // 기본 색상
-        navy: "#111827", // 이전의 var(--navy)
+        pink: {
+          100: "FFAEF2",
+          90: "FFCBFA",
+          80: "FAD5F2",
+        },
+        yellow: {
+          100: "FFEE8E",
+        },
+        bg: {
+          primary: "FBF8F1",
+        },
+        brown: {
+          100: "2B1E1C",
+          80: "7C6F61",
+        },
+        navy: "#111827", //footer 배경색
         gray: {
-          5: "#757575", // 이전의 var(--gray-5)
-          6: "#4a4a4a", // 이전의 var(--gray-6)
+          5: "#757575",
+          6: "#4a4a4a",
         },
       },
     },
