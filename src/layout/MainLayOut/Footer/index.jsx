@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 const MainLayOutFooter = () => {
   const nav = useNavigate();
   return (
-    <footer className="w-full bg-navy text-gray-5 py-10">
+    <footer className="w-full bg-navy text-gray-5 py-6 sm:py-10">
       {/* 중앙 */}
-      <div className="w-[75vw] max-w-[1440px] mx-auto">
+      <div className="w-[90vw] sm:w-[75vw] max-w-[1440px] mx-auto">
         {/* 상단 */}
-        <div className="flex justify-between">
+        <div className="flex flex-col sm:flex-row justify-between gap-8 sm:gap-0">
           {/* 사이트정보 */}
-          <div className="w-1/2 leading-6">
+          <div className="w-full sm:w-1/2 leading-6 text-center sm:text-left">
             {/* title */}
-            <h2 className="text-[1.8rem] font-bold text-white pb-2 mb-2.5">
+            <h2 className="text-[1.5rem] sm:text-[1.8rem] font-bold text-white pb-2 mb-2.5">
               두사타
             </h2>
             {/* 설명 */}
@@ -22,52 +22,58 @@ const MainLayOutFooter = () => {
           </div>
 
           {/* 목록 */}
-          <nav className="flex justify-between w-[40%]">
-            <ul className="flex-y text-right">
-              <li className="pb-3 text-white font-bold">서비스</li>
+          <nav className="flex justify-between w-full sm:gap-0">
+            <ul className="text-center sm:text-right">
+              <li className="pb-3 text-white font-bold text-base sm:text-lg">
+                서비스
+              </li>
               <li
-                className="pb-2 cursor-pointer transition-colors hover:text-white"
+                className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
                 onClick={() => nav("/map")}
               >
                 포스트잇 작성
               </li>
               <li
-                className="pb-2 cursor-pointer transition-colors hover:text-white"
+                className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
                 onClick={() => nav("/register")}
               >
                 알림함
               </li>
               <li
-                className="pb-2 cursor-pointer transition-colors hover:text-white"
+                className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
                 onClick={() => nav("/report")}
               >
                 마이페이지
               </li>
             </ul>
-            <ul className="flex-[0.25] text-right">
-              <li className="pb-3 text-white font-bold">고객지원</li>
+            <ul className="flex-[0.25] text-center sm:text-right">
+              <li className="pb-3 text-white font-bold text-base sm:text-lg">
+                고객지원
+              </li>
               <li
-                className="pb-2 cursor-pointer transition-colors hover:text-white"
+                className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
                 onClick={() => nav("/faq")}
               >
                 FAQ
               </li>
               <li
-                className="pb-2 cursor-pointer transition-colors hover:text-white"
+                className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
                 onClick={() => nav("/faq#qna")}
               >
                 Q&A
               </li>
             </ul>
-            <ul className="flex-[0.25] text-right">
-              <li className="pb-3 text-white font-bold">Front</li>
+            <ul className="flex-[0.25] text-center sm:text-right">
+              <li className="pb-3 text-white font-bold text-base sm:text-lg">
+                Front
+              </li>
               <a href="#" className="text-gray-5 hover:text-white">
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   김규림
                 </li>
               </a>
               <a href="#" className="text-[var(--gray-5)] hover:text-white">
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   김태현
                 </li>
               </a>
@@ -75,35 +81,35 @@ const MainLayOutFooter = () => {
                 href="https://github.com/Tim3208"
                 className="text-[var(--gray-5)] hover:text-white"
               >
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   박정우
                 </li>
               </a>
               <a href="#" className="text-[var(--gray-5)] hover:text-white">
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   오금서
                 </li>
               </a>
             </ul>
-            <ul className="flex-[0.25] text-right">
+            <ul className="flex-[0.25] text-center sm:text-right">
               <li className="pb-3 text-white font-bold">Back</li>
               <a href="#" className="text-[var(--gray-5)] hover:text-white">
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   구교승
                 </li>
               </a>
               <a href="#" className="text-[var(--gray-5)] hover:text-white">
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   신가연
                 </li>
               </a>
               <a href="#" className="text-[var(--gray-5)] hover:text-white">
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   이찬영
                 </li>
               </a>
               <a href="#" className="text-[var(--gray-5)] hover:text-white">
-                <li className="pb-2 cursor-pointer transition-colors">
+                <li className="pb-2 cursor-pointer transition-colors text-sm sm:text-base">
                   정혜빈
                 </li>
               </a>
