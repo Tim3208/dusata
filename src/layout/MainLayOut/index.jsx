@@ -1,11 +1,11 @@
 import MainLayOutFooter from "./Footer";
-// import MainLayOutHeader from "./Header";
+import MainLayOutHeader from "./Header";
 
 const MainLayOut = ({ children }) => {
   return (
     <div>
       <>
-        {/* <MainLayOutHeader /> */}
+        <MainLayOutHeader />
         <div>{children}</div>
         <MainLayOutFooter />
       </>
