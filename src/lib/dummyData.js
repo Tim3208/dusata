@@ -91,7 +91,7 @@ export const dummyPosts = [
     font: "Pretendard",
     color: "pink",
     introduction: "카페 투어 좋아해요 ☕️ 같이 카페 탐방하실 분 구해요!",
-    likeCount: 25,
+    bookmarkCount: 25,
     clickCount: 15,
     createdAt: "2025-10-29T09:15:00.000Z",
     updatedAt: "2025-10-29T09:15:00.000Z",
@@ -110,7 +110,7 @@ export const dummyPosts = [
     color: "yellow",
     introduction:
       "이번 주말에 영화 보러 갈 사람 구해요~ 액션 영화 좋아하시는 분!",
-    likeCount: 25,
+    bookmarkCount: 25,
     clickCount: 8,
     createdAt: "2025-10-29T08:45:00.000Z",
     updatedAt: "2025-10-29T08:45:00.000Z",
@@ -129,7 +129,7 @@ export const dummyPosts = [
     color: "pink",
     introduction:
       "게임과 음악을 좋아하는 컴공과 학생입니다! 취미가 비슷하신 분 연락주세요 🎮🎵",
-    likeCount: 25,
+    bookmarkCount: 25,
     clickCount: 12,
     createdAt: "2025-10-29T11:20:00.000Z",
     updatedAt: "2025-10-29T11:20:00.000Z",
