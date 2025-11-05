@@ -44,7 +44,6 @@ export async function apiGet(path, options = {}) {
     throw new Error(`Failed to parse JSON from ${path}: ${e?.message || e}`);
   }
 }
-
 /**
  * Basic POST wrapper using fetch. Throws on non-2xx.
  * - credentials: include (for cookie-based auth)

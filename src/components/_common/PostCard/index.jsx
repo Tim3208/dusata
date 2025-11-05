@@ -4,8 +4,8 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const colorClasses = {
-  yellow: "bg-yellow-100",
-  pink: "bg-pink-100",
+  Yellow: "bg-yellow-100",
+  Pink: "bg-pink-100",
 };
 
 const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
@@ -49,18 +49,38 @@ const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
     return `${d.getMonth() + 1}.${d.getDate()}`;
   };
 
+  const fontClassFor = (f) => {
+    switch (f) {
+      case "Dahaeng":
+        return "font-Dahaeng";
+      case "DongwhaTtobbok":
+        return "font-DongwhaTtobbok";
+      case "NotGothicButGoding":
+        return "font-NotGothicButGoding";
+      case "GaramYeonGeot":
+        return "font-GaramYeonGeot";
+      default:
+        return "font-sans";
+    }
+  };
+
   return (
     <Card
       className={cn(
         "aspect-square p-2 md:p-6 shadow-md transition-all duration-300",
         "hover:-translate-y-1 hover:rotate-0 cursor-pointer",
         "border-none flex flex-col",
-        colorClasses[post.color]
+        post.color ? colorClasses[post.color] : "bg-yellow-100"
       )}
       onClick={handleView}
     >
       {/* Content - only bio */}
-      <p className="text-sm md:text-base leading-relaxed mb-auto whitespace-pre-wrap line-clamp-4 flex-grow">
+      <p
+        className={cn(
+          "text-sm md:text-2xl leading-relaxed mb-auto whitespace-pre-wrap line-clamp-4 flex-grow",
+          fontClassFor(post?.font)
+        )}
+      >
         {post.introduction}
       </p>
 
