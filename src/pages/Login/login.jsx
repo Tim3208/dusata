@@ -2,6 +2,7 @@ import MainLayOut from '../../layout/MainLayOut';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './login.module.css';
+import authApi from '@/lib/api/auth';
 
 export default function Login() {
   const [studentId, setStudentId] = useState('');
@@ -19,34 +20,16 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch(
-        'http://localhost:8080/api/join/auth/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            studentId,
-            password,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        setError('로그인 실패! 학번 또는 비밀번호를 확인해주세요.');
-        return;
+      const data = await authApi.login({ studentId, password });
+      // Some backends set a session cookie; if token exists, keep it optionally
+      if (data?.token) {
+        localStorage.setItem('token', data.token);
       }
-
-      const data = await response.json();
-
-      localStorage.setItem('accessToken', data.token);
-
       alert('로그인 성공!');
-
       navigate('/');
     } catch (err) {
-      setError('서버 오류! 잠시 후 다시 시도해주세요.');
+      console.error(err);
+      setError('로그인 실패! 학번 또는 비밀번호를 확인해주세요.');
     }
   };
 
@@ -73,7 +56,7 @@ export default function Login() {
           className={styles.input}
         />
 
-        <button onClick={() => navigate('/')} className={styles.button}>
+        <button onClick={handleLogin} className={styles.button}>
           로그인
         </button>
 

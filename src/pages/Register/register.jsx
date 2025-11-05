@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './register.module.css';
+import authApi from '@/lib/api/auth';
 
 export default function SignupForm() {
   const navigate = useNavigate();
@@ -49,10 +50,7 @@ export default function SignupForm() {
 
     try {
       // 학번 중복체크
-      const checkId = await fetch(
-        '/api/join/checkId?studentId=' + form.studentId
-      );
-      const checkResult = await checkId.json();
+      const checkResult = await authApi.checkId(form.studentId);
 
       if (!checkResult.available) {
         setError('이미 사용 중인 학번입니다.');
@@ -60,30 +58,23 @@ export default function SignupForm() {
       }
 
       // 회원가입 API 호출
-      const res = await fetch('/api/join/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          studentId: form.studentId,
-          grade: Number(form.grade),
-          department: form.major,
-          birthDate: form.birth,
-          sex:
-            form.gender === 'male'
-              ? 'MALE'
-              : form.gender === 'female'
-              ? 'FEMALE'
-              : 'ETC',
-          instagram: '',
-          kakao: '',
-          phone: '',
-          password: form.password,
-        }),
+      await authApi.register({
+        name: form.name,
+        studentId: form.studentId,
+        grade: Number(form.grade),
+        department: form.major,
+        birthDate: form.birth,
+        sex:
+          form.gender === 'male'
+            ? 'MALE'
+            : form.gender === 'female'
+            ? 'FEMALE'
+            : 'ETC',
+        instagram: '',
+        kakao: '',
+        phone: '',
+        password: form.password,
       });
-
-      const data = await res.json();
-      console.log(data);
 
       alert('회원가입 완료!');
       navigate('/login'); // 회원가입 후 로그인 페이지 이동

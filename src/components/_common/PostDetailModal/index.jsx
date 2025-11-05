@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   X,
   Heart,
@@ -10,13 +10,13 @@ import {
   MessageCircle,
   VenusAndMars,
   Eye,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const colorClasses = {
-  Yellow: "bg-yellow-100",
-  Pink: "bg-pink-100",
+  Yellow: 'bg-yellow-100',
+  Pink: 'bg-pink-100',
 };
 
 const PostDetailModal = ({
@@ -35,7 +35,7 @@ const PostDetailModal = ({
   );
   const [hasViewed, setHasViewed] = useState(() => {
     try {
-      const viewed = JSON.parse(localStorage.getItem("viewedPosts") || "{}");
+      const viewed = JSON.parse(localStorage.getItem('viewedPosts') || '{}');
       return Boolean(post && viewed[post.postId]);
     } catch {
       return false;
@@ -46,13 +46,13 @@ const PostDetailModal = ({
   // ESC 키로 닫기
   useEffect(() => {
     const handleEscape = (e) => {
-      if (open && e.key === "Escape") {
+      if (open && e.key === 'Escape') {
         onOpenChange(false);
       }
     };
 
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
   }, [open, onOpenChange]);
 
   // post 또는 currentUserId가 바뀔 때 내부 상태를 동기화
@@ -61,7 +61,7 @@ const PostDetailModal = ({
     setBookmarkCount(post?.bookmarkCount ?? 0);
     setViewCount(post?.clickCount ?? 0);
     try {
-      const viewed = JSON.parse(localStorage.getItem("viewedPosts") || "{}");
+      const viewed = JSON.parse(localStorage.getItem('viewedPosts') || '{}');
       setHasViewed(Boolean(post && viewed[post.postId]));
     } catch {
       setHasViewed(false);
@@ -86,18 +86,19 @@ const PostDetailModal = ({
     }
   };
 
+  // FIXME: 글꼴 최신화 필요
   const fontClassFor = (f) => {
     switch (f) {
-      case "Dahaeng":
-        return "font-Dahaeng";
-      case "DongwhaTtobbok":
-        return "font-DongwhaTtobbok";
-      case "NotGothicButGoding":
-        return "font-NotGothicButGoding";
-      case "GaramYeonGeot":
-        return "font-GaramYeonGeot";
+      case 'Dahaeng':
+        return 'font-Dahaeng';
+      case 'DongwhaTtobbok':
+        return 'font-DongwhaTtobbok';
+      case 'NotGothicButGoding':
+        return 'font-NotGothicButGoding';
+      case 'GaramYeonGeot':
+        return 'font-GaramYeonGeot';
       default:
-        return "font-sans";
+        return 'font-sans';
     }
   };
 
@@ -108,13 +109,13 @@ const PostDetailModal = ({
     >
       <div
         className={cn(
-          "relative bg-white w-full max-w-[400px] max-h-[90vh] overflow-y-auto",
-          "rounded-lg shadow-xl",
-          "animate-in zoom-in-95 duration-200"
+          'relative bg-white w-full max-w-[400px] max-h-[90vh] overflow-y-auto',
+          'rounded-lg shadow-xl',
+          'animate-in zoom-in-95 duration-200'
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
+        {/* X 버튼 */}
         <div className="relative">
           <Button
             variant="ghost"
@@ -129,15 +130,15 @@ const PostDetailModal = ({
         {/* Post-it */}
         <div
           className={cn(
-            "p-6 pb-4 min-h-[300px] flex flex-col",
+            'p-6 pb-4 min-h-[300px] flex flex-col',
             colorClasses[post.color]
           )}
         >
-          {/* Bio */}
+          {/* 자기소개 */}
           <div className="flex-grow my-6">
             <p
               className={cn(
-                "text-base leading-relaxed whitespace-pre-wrap",
+                'text-base leading-relaxed whitespace-pre-wrap',
                 fontClassFor(post.font)
               )}
             >
@@ -145,22 +146,22 @@ const PostDetailModal = ({
             </p>
           </div>
 
-          {/* Bookmark button */}
+          {/* 북마크 버튼 */}
           <div className="flex items-center gap-2 pt-4 border-t border-current/20">
             <div className="flex justify-start gap-4">
               <Button
                 variant="ghost"
                 size="sm"
                 className={cn(
-                  "gap-1.5 text-red-500",
-                  isLiked && "text-red-500"
+                  'gap-1.5 text-red-500',
+                  isLiked && 'text-red-500'
                 )}
                 onClick={handleLike}
               >
                 <Heart
                   className={cn(
-                    "h-5 w-5",
-                    isLiked && "fill-current animate-heart-bounce"
+                    'h-5 w-5',
+                    isLiked && 'fill-current animate-heart-bounce'
                   )}
                 />
                 <span className="font-medium">{bookmarkCount}</span>
@@ -173,18 +174,18 @@ const PostDetailModal = ({
               </div>
             </div>
             <span className="text-xs opacity-60 ml-auto">
-              {new Date(post.createdAt).toLocaleDateString("ko-KR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
+              {new Date(post.createdAt).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
               })}
             </span>
           </div>
         </div>
 
-        {/* Detailed info section */}
+        {/* 상세 정보 섹션 */}
         <div className="pt-0 pb-6 px-6 space-y-4 bg-white">
           <h3 className="font-bold text-lg my-4">상세 정보</h3>
           <div className="space-y-3">
@@ -193,7 +194,7 @@ const PostDetailModal = ({
               <User className="h-4 w-4 text-brown-80" />
               <span className="text-brown-80">이름:</span>
               <span className="ml-1 font-medium">
-                {post.showName ? post.name : "비공개"}
+                {post.showName ? post.name : '비공개'}
               </span>
             </div>
 
@@ -201,7 +202,13 @@ const PostDetailModal = ({
               <VenusAndMars className="h-4 w-4 text-brown-80" />
               <span className="text-brown-80">성별:</span>
               <span className="ml-1 font-medium">
-                {post.showName ? post.name : "비공개"}
+                {post?.sex
+                  ? post.sex === 'MALE'
+                    ? '남성'
+                    : post.sex === 'FEMALE'
+                    ? '여성'
+                    : '기타'
+                  : '비공개'}
               </span>
             </div>
 
@@ -209,7 +216,7 @@ const PostDetailModal = ({
               <GraduationCap className="h-4 w-4 text-brown-80" />
               <span className="text-brown-80">학과:</span>
               <span className="ml-1 font-medium">
-                {post.showDepartment ? post.department : "비공개"}
+                {post.showDepartment ? post.department : '비공개'}
               </span>
             </div>
 
@@ -217,7 +224,7 @@ const PostDetailModal = ({
               <Calendar className="h-4 w-4 text-brown-80" />
               <span className="text-brown-80">학년:</span>
               <span className="ml-1 font-medium">
-                {post.showGrade ? `${post.grade}학년` : "비공개"}
+                {post.showGrade ? `${post.grade}학년` : '비공개'}
               </span>
             </div>
 
@@ -225,7 +232,7 @@ const PostDetailModal = ({
               <Calendar className="h-4 w-4 text-brown-80" />
               <span className="text-brown-80">나이:</span>
               <span className="ml-1 font-medium">
-                {post.showBirth ? `${post.age}세` : "비공개"}
+                {post.showBirth ? `${post.age}세` : '비공개'}
               </span>
             </div>
 

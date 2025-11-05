@@ -1,12 +1,13 @@
-import MainLayOut from "@/layout/MainLayOut";
-import { useState, useEffect } from "react";
-import PostCard from "@/components/_common/PostCard";
-import PostDetailModal from "@/components/_common/PostDetailModal";
+import MainLayOut from '@/layout/MainLayOut';
+import { useState, useEffect } from 'react';
+import PostCard from '@/components/_common/PostCard';
+import PostDetailModal from '@/components/_common/PostDetailModal';
 // import { dummyPosts, dummyUsers } from "@/lib/dummyData";
-import { Button } from "@/components/ui/button";
-import { Filter } from "lucide-react";
-import postsApi from "@/lib/api/posts";
-import { useNavigate } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { Filter } from 'lucide-react';
+import postsApi from '@/lib/api/posts';
+import authApi from '@/lib/api/auth';
+import { useNavigate } from 'react-router-dom';
 
 const getRandomRotation = () => {
   return Math.random() * 8 - 4;
@@ -18,7 +19,8 @@ const MainPage = () => {
   const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const currentUserId = "20201234"; // TODO: 실제 로그인 사용자 ID로 교체
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,8 +30,20 @@ const MainPage = () => {
         setLoading(true);
         const list = await postsApi.list();
         if (mounted) setPosts(list);
+        // Try to hydrate current user (cookie-based session)
+        try {
+          const me = await authApi.currentUser();
+          if (mounted && me?.studentId) {
+            setCurrentUserId(me.studentId);
+            setIsLoggedIn(true);
+          } else if (mounted) {
+            setIsLoggedIn(false);
+          }
+        } catch (_) {
+          if (mounted) setIsLoggedIn(false);
+        }
       } catch (e) {
-        if (mounted) setError(e?.message || "failed to load");
+        if (mounted) setError(e?.message || 'failed to load');
       } finally {
         if (mounted) setLoading(false);
       }
@@ -40,9 +54,8 @@ const MainPage = () => {
   }, []);
 
   const handlePostClick = (post) => {
-    const isLoggedIn = true; // TODO: 실제 인증 상태로 교체
     if (!isLoggedIn) {
-      navigate("/login", { replace: true, state: { from: location.pathname } });
+      navigate('/login', { replace: true, state: { from: location.pathname } });
       return;
     }
     setSelectedPost(post);
@@ -54,25 +67,39 @@ const MainPage = () => {
     const notification = {
       id: `notif-${Date.now()}`,
       userId: posts.find((p) => p.postId === postId)?.studentId,
-      type: "like",
+      type: 'like',
       fromUserId: currentUserId,
       postId: postId,
       message: `${currentUserId}님이 회원님의 게시물을 좋아합니다`,
       read: false,
       createdAt: new Date().toISOString(),
     };
-    console.log("새로운 알림:", notification);
+    console.log('새로운 알림:', notification);
   };
 
-  const handlePostView = (postId) => {
-    // 실제로는 API 호출을 통해 서버에 조회수를 업데이트
-    setPosts(
-      posts.map((post) =>
+  const handlePostView = async (postId) => {
+    // 낙관적 업데이트: 먼저 UI 증가
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
         post.postId === postId
           ? { ...post, clickCount: (post.clickCount || 0) + 1 }
           : post
       )
     );
+
+    // 서버에 조회수 증가 요청
+    try {
+      const updated = await postsApi.incrementView(postId);
+      if (updated) {
+        // 서버 응답으로 정확한 값 반영
+        setPosts((prevPosts) =>
+          prevPosts.map((p) => (p.postId === postId ? updated : p))
+        );
+      }
+    } catch (err) {
+      console.error('조회수 업데이트 실패:', err);
+      // 실패해도 낙관적 업데이트는 유지
+    }
   };
 
   return (
