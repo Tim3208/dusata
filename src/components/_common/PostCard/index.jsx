@@ -49,6 +49,21 @@ const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
     return `${d.getMonth() + 1}.${d.getDate()}`;
   };
 
+  const fontClassFor = (f) => {
+    switch (f) {
+      case "Dahaeng":
+        return "font-Dahaeng";
+      case "DongwhaTtobbok":
+        return "font-DongwhaTtobbok";
+      case "NotGothicButGoding":
+        return "font-NotGothicButGoding";
+      case "GaramYeonGeot":
+        return "font-GaramYeonGeot";
+      default:
+        return "font-sans";
+    }
+  };
+
   return (
     <Card
       className={cn(
@@ -60,7 +75,12 @@ const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
       onClick={handleView}
     >
       {/* Content - only bio */}
-      <p className="text-sm md:text-base leading-relaxed mb-auto whitespace-pre-wrap line-clamp-4 flex-grow">
+      <p
+        className={cn(
+          "text-sm md:text-2xl leading-relaxed mb-auto whitespace-pre-wrap line-clamp-4 flex-grow",
+          fontClassFor(post?.font)
+        )}
+      >
         {post.introduction}
       </p>
 

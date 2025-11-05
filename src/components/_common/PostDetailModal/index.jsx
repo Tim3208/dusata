@@ -9,6 +9,7 @@ import {
   Phone,
   MessageCircle,
   VenusAndMars,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -29,7 +30,9 @@ const PostDetailModal = ({
   const [isLiked, setIsLiked] = useState(() =>
     Boolean(post?.likedBy?.includes?.(currentUserId))
   );
-  const [likeCount, setLikeCount] = useState(() => post?.likeCount ?? 0);
+  const [bookmarkCount, setBookmarkCount] = useState(
+    () => post?.bookmarkCount ?? 0
+  );
   const [hasViewed, setHasViewed] = useState(() => {
     try {
       const viewed = JSON.parse(localStorage.getItem("viewedPosts") || "{}");
@@ -55,7 +58,7 @@ const PostDetailModal = ({
   // post 또는 currentUserId가 바뀔 때 내부 상태를 동기화
   useEffect(() => {
     setIsLiked(Boolean(post?.likedBy?.includes?.(currentUserId)));
-    setLikeCount(post?.likeCount ?? 0);
+    setBookmarkCount(post?.bookmarkCount ?? 0);
     setViewCount(post?.clickCount ?? 0);
     try {
       const viewed = JSON.parse(localStorage.getItem("viewedPosts") || "{}");
@@ -72,7 +75,7 @@ const PostDetailModal = ({
     e?.stopPropagation();
     const nextLiked = !isLiked;
     setIsLiked(nextLiked);
-    setLikeCount((c) => (nextLiked ? c + 1 : Math.max(0, c - 1)));
+    setBookmarkCount((c) => (nextLiked ? c + 1 : Math.max(0, c - 1)));
     // 부모 컴포넌트에 좋아요 토글 알림 (알림 생성은 부모에서 처리)
     onLike?.(post.postId, nextLiked, currentUserId);
   };
@@ -80,6 +83,21 @@ const PostDetailModal = ({
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onOpenChange(false);
+    }
+  };
+
+  const fontClassFor = (f) => {
+    switch (f) {
+      case "Dahaeng":
+        return "font-Dahaeng";
+      case "DongwhaTtobbok":
+        return "font-DongwhaTtobbok";
+      case "NotGothicButGoding":
+        return "font-NotGothicButGoding";
+      case "GaramYeonGeot":
+        return "font-GaramYeonGeot";
+      default:
+        return "font-sans";
     }
   };
 
@@ -117,27 +135,43 @@ const PostDetailModal = ({
         >
           {/* Bio */}
           <div className="flex-grow my-6">
-            <p className="text-base leading-relaxed whitespace-pre-wrap">
+            <p
+              className={cn(
+                "text-base leading-relaxed whitespace-pre-wrap",
+                fontClassFor(post.font)
+              )}
+            >
               {post.introduction}
             </p>
           </div>
 
-          {/* Like button */}
+          {/* Bookmark button */}
           <div className="flex items-center gap-2 pt-4 border-t border-current/20">
-            <Button
-              variant="ghost"
-              size="sm"
-              className={cn("gap-1.5", isLiked && "text-red-500")}
-              onClick={handleLike}
-            >
-              <Heart
+            <div className="flex justify-start gap-4">
+              <Button
+                variant="ghost"
+                size="sm"
                 className={cn(
-                  "h-5 w-5",
-                  isLiked && "fill-current animate-heart-bounce"
+                  "gap-1.5 text-red-500",
+                  isLiked && "text-red-500"
                 )}
-              />
-              <span className="font-medium">{likeCount}</span>
-            </Button>
+                onClick={handleLike}
+              >
+                <Heart
+                  className={cn(
+                    "h-5 w-5",
+                    isLiked && "fill-current animate-heart-bounce"
+                  )}
+                />
+                <span className="font-medium">{bookmarkCount}</span>
+              </Button>
+              <div className="flex items-center gap-1.5">
+                <Eye className="h-5 w-5 text-brown-80" />
+                <span className="text-sm font-regular text-brown-80">
+                  {viewCount}
+                </span>
+              </div>
+            </div>
             <span className="text-xs opacity-60 ml-auto">
               {new Date(post.createdAt).toLocaleDateString("ko-KR", {
                 year: "numeric",
@@ -164,7 +198,7 @@ const PostDetailModal = ({
             </div>
 
             <div className="flex items-center gap-1 text-sm">
-              <User className="h-4 w-4 text-brown-80" />
+              <VenusAndMars className="h-4 w-4 text-brown-80" />
               <span className="text-brown-80">성별:</span>
               <span className="ml-1 font-medium">
                 {post.showName ? post.name : "비공개"}
@@ -219,13 +253,6 @@ const PostDetailModal = ({
                 <span className="ml-1 font-medium">{post.phone}</span>
               </div>
             )}
-          </div>
-
-          {/* Action buttons */}
-          <div className="flex gap-2 pt-4">
-            <Button className="flex-1 bg-accent hover:bg-accent/90">
-              관심 표시하기
-            </Button>
           </div>
         </div>
       </div>
