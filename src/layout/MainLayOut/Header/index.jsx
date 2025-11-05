@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Bell, Home, PlusCircle, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 const MainLayOutHeader = () => {
   const location = useLocation();
   const pathname = location.pathname;
+  const navigate = useNavigate();
   const unreadNotifications = 3; // This will come from state later
 
   const navItems = [
@@ -39,6 +40,19 @@ const MainLayOutHeader = () => {
                 <Link
                   key={item.href}
                   to={item.href}
+                  onClick={(e) => {
+                    // 보호가 필요한 라우트는 여기서 토큰 체크 후 로그인으로 리다이렉트
+                    const protectedRoutes = ['/create', '/profile'];
+                    if (protectedRoutes.includes(item.href)) {
+                      const token = localStorage.getItem('token');
+                      if (!token) {
+                        alert('로그인이 필요합니다.');
+                        // 기본 Link 이동 막고 로그인으로 리다이렉트
+                        e.preventDefault();
+                        navigate('/login');
+                      }
+                    }
+                  }}
                   className={cn(
                     'flex flex-col md:flex-row items-center gap-1 md:gap-2 px-3 py-2 rounded-lg transition-colors relative',
                     isActive
