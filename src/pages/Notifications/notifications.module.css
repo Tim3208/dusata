@@ -1,0 +1,122 @@
+.pageWrapper {
+  margin-top: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-primary);
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.content {
+  width: 100%;
+  max-width: 619px;
+  margin: 0 auto 100px auto;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 64px;
+  margin-bottom: 32px;
+}
+
+.notificationTitle {
+  font-size: clamp(20px, 6vw, 35px); /* 화면에 따라 글자 크기 조절 */
+  font-weight: 700;
+  color: var(--brown-100);
+}
+
+.markAllRead {
+  background: none;
+  border: none;
+  font-size: clamp(12px, 3vw, 14px);
+  color: var(--brown-100);
+  cursor: pointer;
+}
+
+.markAllRead:hover {
+  color: var(--brown-80);
+}
+
+.notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notificationItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(8px, 2vw, 12px); /* 모바일 화면에 맞게 조절 */
+  border: 1px solid var(--brown-100);
+  border-radius: 12px;
+  font-size: clamp(12px, 3vw, 14px);
+  background-color: white;
+  box-shadow: 0px 2px 4px var(--shadow);
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.unread {
+  background-color: var(--pink-main-80);
+  cursor: pointer;
+}
+
+.unread:hover {
+  background-color: var(--white);
+}
+
+.heart {
+  margin-right: 12px;
+  font-size: clamp(14px, 4vw, 18px);
+}
+
+.message {
+  flex: 1;
+  font-size: clamp(14px, 4vw, 16px);
+  color: var(--brown-100);
+}
+
+.time {
+  font-size: clamp(10px, 3vw, 12px);
+  color: var(--brown-80);
+  margin-left: 8px;
+}
+
+@media (max-width: 400px) {
+  .pageWrapper {
+    margin-top: 50px;
+  }
+
+  .header {
+    margin-top: 40px;
+    margin-bottom: 24px;
+  }
+
+  .notificationItem {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .heart {
+    margin-right: 8px;
+  }
+
+  .time {
+    font-size: 10px;
+    margin-left: 4px;
+  }
+
+  .notificationTitle {
+    font-size: 24px;
+  }
+
+  .markAllRead {
+    font-size: 12px;
+  }
+}
+

@@ -1,0 +1,143 @@
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-primary);
+  flex-direction: column;
+  padding: 16px; /* 모바일 패딩 확보 */
+  box-sizing: border-box;
+}
+
+.card {
+  background: var(--white);
+  width: 100%;
+  max-width: 601px;
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px var(--shadow);
+  border: 1px solid var(--brown-80);
+  height: auto; /* 내용에 맞게 높이 자동 조절 */
+  min-height: 600px; /* 최소 높이 유지 */
+  position: relative; /* 에러 메시지 절대 위치 기준 */
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  font-size: clamp(28px, 6vw, 48px); /* 화면 크기에 따라 자동 조절 */
+  font-weight: 700;
+  color: var(--pink-main-100);
+}
+
+.subtitle {
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 32px;
+  color: var(--brown-80);
+  font-size: clamp(12px, 4vw, 16px);
+}
+
+.label {
+  font-size: clamp(12px, 3vw, 16px);
+  color: var(--brown-80);
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 0.75px solid var(--brown-80);
+  font-size: clamp(14px, 3vw, 16px);
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.select {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 8px 12px;
+  border: 1px solid var(--brown-80);
+  background: var(--white);
+  font-size: clamp(14px, 3vw, 16px);
+  margin-bottom: 16px;
+  display: block;
+  line-height: 40px;
+  appearance: none;
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 14px;
+  color: var(--brown-80);
+}
+
+.button {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: var(--pink-main-80);
+  font-size: clamp(18px, 4vw, 24px);
+  cursor: pointer;
+  color: var(--brown-80);
+  margin-top: 15px;
+  transition: 0.2s;
+}
+
+.button:hover {
+  background: var(--pink-main-100);
+}
+
+.error {
+  color: var(--red);
+  font-size: clamp(10px, 3vw, 12px);
+}
+
+.loginText {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--brown-80);
+  font-size: clamp(14px, 3vw, 16px);
+}
+
+.loginLink {
+  color: var(--pink-main-80);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.loginLink:hover {
+  color: var(--pink-main-100);
+}
+
+/* 400px 이하 작은 화면 조정 */
+@media (max-width: 400px) {
+  .card {
+    min-height: 500px;
+    padding: 12px;
+  }
+
+  .button {
+    font-size: 20px;
+    height: 45px;
+  }
+
+  .input, .select {
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .error {
+    bottom: 60px;
+    font-size: 12px;
+  }
+}
