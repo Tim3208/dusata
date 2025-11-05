@@ -4,6 +4,10 @@ import './CreatePage.css';
 import MainLayOut from '@/layout/MainLayOut';
 import postsApi from '@/lib/api/posts';
 
+import badWords from '@/assets/slang.json' with { type: 'json' };
+// JSON 배열 → slang 값만 추출해서 Set으로 변환
+const badWordSet = new Set(badWords.map((item) => item.slang));
+
 const colors = ['#FFF59D', '#F8BBD0'];
 const fonts = [
   'memomentKkukkkuk',
@@ -19,8 +23,17 @@ export default function CreatePage() {
   const [text, setText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const containsBadWord = (inputText) => {
+    return [...badWordSet].some((word) => inputText.includes(word));
+  };
+
   const handleSubmit = async () => {
     if (!text.trim()) return alert('내용을 입력해주세요!');
+
+    // 욕설 필터링
+    if (containsBadWord(text)) {
+      return alert('부적절한 내용이 포함되어 있습니다. 다시 작성해주세요.');
+    }
 
     try {
       setIsSubmitting(true);
