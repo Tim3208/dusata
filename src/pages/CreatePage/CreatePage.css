@@ -1,4 +1,6 @@
-html, body, #root {
+html,
+body,
+#root {
   min-height: 100%;
   background-color: var(--bg-cream, #fdf8f0);
   margin: 0;
@@ -13,7 +15,6 @@ html, body, #root {
 body {
   min-height: 100vh;
   margin: 0;
-  padding-top: 50px;
   background-color: var(--bg-cream, #fdf8f0);
 }
 
@@ -24,7 +25,7 @@ body {
   padding-top: 40px;
   padding-bottom: 129px;
   width: 100%;
-  font-family: 'Pretendard', sans-serif;
+  font-family: "Pretendard", sans-serif;
 }
 
 .Create_container {
@@ -80,7 +81,7 @@ body {
 .Create_post {
   font-weight: 500;
   font-size: 32px;
-  color: var(--brown-200, #7C6F61);
+  color: var(--brown-200, #7c6f61);
 }
 
 .Create_preview {
@@ -95,7 +96,7 @@ body {
   border-radius: 12px;
   resize: none;
   font-size: 32px;
-  border: 1px solid var(--brown-200, #7C6F61);
+  border: 1px solid var(--brown-200, #7c6f61);
   padding-top: 44px;
   padding-left: 42px;
   box-sizing: border-box;
@@ -111,7 +112,7 @@ body {
 .Create_textarea::placeholder {
   font-weight: 500;
   font-size: 32px;
-  color: var(--brown-200, #7C6F61);
+  color: var(--brown-200, #7c6f61);
   opacity: 0.8;
 }
 
@@ -134,7 +135,7 @@ body {
 
 .Create_cancel {
   background-color: white;
-  border: 1px solid var(--brown-200, #7C6F61);
+  border: 1px solid var(--brown-200, #7c6f61);
   color: black;
 }
 
