@@ -43,6 +43,12 @@ const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
     onClick?.();
   };
 
+  const formatShortDate = (date) => {
+    const d = new Date(date);
+    if (Number.isNaN(d.getTime())) return "";
+    return `${d.getMonth() + 1}.${d.getDate()}`;
+  };
+
   return (
     <Card
       className={cn(
@@ -86,10 +92,7 @@ const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
           </div>
         </div>
         <span className="text-xs opacity-60">
-          {new Date(post.createdAt).toLocaleDateString("ko-KR", {
-            month: "short",
-            day: "numeric",
-          })}
+          {formatShortDate(post.createdAt)}
         </span>
       </div>
     </Card>
