@@ -1,4 +1,6 @@
-html, body, #root {
+html,
+body,
+#root {
   min-height: 100%;
   background-color: var(--bg-cream, #fdf8f0);
   margin: 0;
@@ -11,6 +13,8 @@ html, body, #root {
 }
 
 body {
+  min-height: 100vh;
+  margin: 0;
   background-color: var(--bg-cream, #fdf8f0);
 }
 
@@ -21,6 +25,7 @@ body {
   padding: 40px 16px 120px;
   width: 100%;
   box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
 }
 
 .Create_container {
@@ -83,6 +88,13 @@ body {
   font-size: clamp(14px, 2vw, 18px);
 }
 
+.Create_font_group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
 .Create_preview {
   display: flex;
   flex-direction: column;
@@ -135,7 +147,7 @@ body {
 
 .Create_cancel {
   background-color: white;
-  border: 1px solid var(--brown-200, #7C6F61);
+  border: 1px solid var(--brown-200, #7c6f61);
   color: black;
   transition: background-color 0.2s ease;
 }
@@ -209,6 +221,8 @@ body {
 }
 
 /* ===== 폰트 상속 방지 ===== */
-textarea, input, button {
+textarea,
+input,
+button {
   font-family: unset;
 }
