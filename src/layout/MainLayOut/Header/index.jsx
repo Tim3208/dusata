@@ -21,7 +21,7 @@ const MainLayOutHeader = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t md:top-0 md:bottom-auto">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t md:relative md:top-0 md:bottom-auto">
       <div className="container mx-auto max-w-[1440px] px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo - desktop only */}
