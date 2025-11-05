@@ -4,6 +4,17 @@
 
 @layer base {
   :root {
+    --red:#FF0000;
+    --pink-main-100:#FFAEF2;
+    --pink-main-80:#FAD5F2;
+    --brown-100: #2B1E1C;
+    --brown-80:#7C6F61;
+    --brown-60: #A47764;
+    --shadow: #00000040;
+    --yellow-100:#FEF08A;
+    --yellow-80:#FEFCE8;
+    --bg-primary:#F7F3EB;
+    --white:#FFFFFF;
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -60,9 +71,9 @@
 
 @layer base {
   * {
-    @apply border-border;
+    /*@apply border-border;*/
   }
   body {
-    @apply bg-background text-foreground;
+    /*@apply bg-background text-foreground;*/
   }
 }
