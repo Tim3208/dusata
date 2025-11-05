@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Github } from "lucide-react";
 
 const MainLayOutFooter = () => {
   const nav = useNavigate();
@@ -29,19 +30,19 @@ const MainLayOutFooter = () => {
               </li>
               <li
                 className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
-                onClick={() => nav("/map")}
+                onClick={() => nav("/create")}
               >
                 포스트잇 작성
               </li>
               <li
                 className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
-                onClick={() => nav("/register")}
+                onClick={() => nav("/alert")}
               >
                 알림함
               </li>
               <li
                 className="pb-2 cursor-pointer transition-colors hover:text-white text-sm sm:text-base"
-                onClick={() => nav("/report")}
+                onClick={() => nav("/my")}
               >
                 마이페이지
               </li>
@@ -139,7 +140,7 @@ const MainLayOutFooter = () => {
             href="https://github.com/Tim3208/dusata"
             className="text-2xl text-[var(--gray-5)]"
           >
-            {/* <FontAwesomeIcon icon={faGithub} /> */}
+            <Github />
           </a>
         </div>
       </div>

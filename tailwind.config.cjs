@@ -6,21 +6,29 @@ module.exports = {
     extend: {
       colors: {
         pink: {
-          100: "FFAEF2",
-          90: "FFCBFA",
-          80: "FAD5F2",
+          100: "#FFAEF2",
+          90: "#FFCBFA",
+          80: "#FAD5F2",
         },
         yellow: {
-          100: "FFEE8E",
+          100: "#FFEE8E",
         },
         bg: {
-          primary: "FBF8F1",
+          primary: "#FBF8F1",
         },
         brown: {
-          100: "2B1E1C",
-          80: "7C6F61",
+          100: "#2B1E1C",
+          80: "#7C6F61",
         },
         navy: "#111827", //footer 배경색
+        primary: "#111827",
+        "primary-foreground": "#ffffff",
+        secondary: "#F3F4F6",
+        "secondary-foreground": "#111827",
+        destructive: "#F14D4C",
+        "destructive-foreground": "#ffffff",
+        ring: "#e5e7eb",
+        foreground: "#111827",
         gray: {
           5: "#757575",
           6: "#4a4a4a",

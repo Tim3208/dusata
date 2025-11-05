@@ -21,12 +21,12 @@ const MainLayOutHeader = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border md:top-0 md:bottom-auto">
-      <div className="container mx-auto px-4">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t md:top-0 md:bottom-auto">
+      <div className="container mx-auto max-w-[1440px] px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo - desktop only */}
-          <Link href="/" className="hidden md:flex items-center gap-2">
-            <div className="text-2xl font-bold text-black">두사타</div>
+          <Link href="/" className="hidden md:flex items-center">
+            <div className="text-2xl font-bold text-pink-100">두사타</div>
           </Link>
 
           {/* Navigation items */}
@@ -42,15 +42,15 @@ const MainLayOutHeader = () => {
                   className={cn(
                     "flex flex-col md:flex-row items-center gap-1 md:gap-2 px-3 py-2 rounded-lg transition-colors relative",
                     isActive
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-pink-100"
+                      : "text-brown-100 hover:text-pink-90"
                   )}
                 >
                   <div className="relative">
                     <Icon
                       className={cn(
                         "w-6 h-6",
-                        item.href === "/notifications" &&
+                        item.href === "/notification" &&
                           unreadNotifications > 0 &&
                           "animate-bell-shake"
                       )}
