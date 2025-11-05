@@ -28,8 +28,6 @@
   font-display: swap;
 }
 
-/* Outline variant removed per request; only basic variant is used for C 버튼 */
-
 @font-face {
   font-family: 'GowunDodum-Regular';
   src: url('./assets/fonts/GowunDodum-Regular.ttf') format('truetype');
