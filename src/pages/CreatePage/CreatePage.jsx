@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./CreatePage.css";
 import MainLayOut from "@/layout/MainLayOut";
+import postsApi from "@/lib/api/posts";
 
 const colors = ["#FFF59D", "#F8BBD0"];
 const fonts = [
@@ -30,22 +30,17 @@ const CreatePage = () => {
         content: text.trim(),
       };
 
-      const response = await axios.post(
-        "http://localhost:8080/api/posts",
-        requestBody,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      if (response.status === 201 || response.status === 200) {
-        alert("게시글이 성공적으로 등록되었습니다!");
-        navigate("/");
-      } else {
-        throw new Error("서버 응답이 성공이 아닙니다.");
-      }
+      await postsApi.create(requestBody);
+      alert("게시글이 성공적으로 등록되었습니다!");
+      navigate("/");
     } catch (error) {
       console.error("게시 실패:", error);
+      const msg = String(error?.message || "");
+      if (msg.includes(" 401 ") || msg.toLowerCase().includes("unauthorized")) {
+        const go = window.confirm("로그인이 필요합니다. 로그인 페이지로 이동할까요?");
+        if (go) navigate("/login", { replace: true, state: { from: "/create" } });
+        return;
+      }
       alert("게시 중 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
@@ -76,8 +71,7 @@ const CreatePage = () => {
                       backgroundColor: c,
                       border:
                         c === color ? "2px solid #2B1E1C" : "1px solid gray",
-                      boxShadow:
-                        c === color ? "0px 4px 4px #00000040" : "none",
+                      boxShadow: c === color ? "0px 4px 4px #00000040" : "none",
                     }}
                     onClick={() => setColor(c)}
                   />
@@ -85,11 +79,20 @@ const CreatePage = () => {
               </div>
             </div>
 
-            <div className="Create_font_group" style={{ alignItems: "flex-end" }}>
-              <div className="Create_font" style={{ textAlign: "right", width: "100%" }}>
+            <div
+              className="Create_font_group"
+              style={{ alignItems: "flex-end" }}
+            >
+              <div
+                className="Create_font"
+                style={{ textAlign: "right", width: "100%" }}
+              >
                 글꼴
               </div>
-              <div className="Create_buttons" style={{ justifyContent: "flex-end" }}>
+              <div
+                className="Create_buttons"
+                style={{ justifyContent: "flex-end" }}
+              >
                 {fonts.map((f, idx) => (
                   <button
                     key={f}
@@ -97,8 +100,7 @@ const CreatePage = () => {
                       backgroundColor: f === font ? "#FFEE8E" : "#FFFFFF",
                       border:
                         f === font ? "2px solid #2B1E1C" : "1px solid gray",
-                      boxShadow:
-                        f === font ? "0px 4px 4px #00000040" : "none",
+                      boxShadow: f === font ? "0px 4px 4px #00000040" : "none",
                       fontFamily: f,
                       fontWeight: f === font ? "bold" : "normal",
                       fontSize: "18px",
