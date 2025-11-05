@@ -20,6 +20,9 @@ module.exports = {
           100: "#2B1E1C",
           80: "#7C6F61",
         },
+        red: {
+          point: "#F14D4C",
+        },
         navy: "#111827", //footer 배경색
         primary: "#111827",
         "primary-foreground": "#ffffff",
