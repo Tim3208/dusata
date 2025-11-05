@@ -1,10 +1,12 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // 페이지 모음
-import MainPage from "./pages/MainPage";
-import CreatePage from "./pages/CreatePage/CreatePage.jsx";
-
+import MainPage from './pages/MainPage';
+import Login from './pages/Login/login.jsx';
+import Register from './pages/Register/register.jsx';
+import CreatePage from './pages/CreatePage/CreatePage.jsx';
+import { MyPage } from './pages/MyPage/mypage.jsx';
 
 function App() {
   return (
@@ -12,8 +14,10 @@ function App() {
       <Routes>
         {/* 메인 */}
         <Route path="/" element={<MainPage />} />
-        {/* 포스트잇 생성 */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreatePage />} />
+        <Route path="/profile" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   );

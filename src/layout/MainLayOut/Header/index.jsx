@@ -1,7 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
-import { Bell, Home, PlusCircle, User } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+import { Link, useLocation } from 'react-router-dom';
+import { Bell, Home, PlusCircle, User } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 const MainLayOutHeader = () => {
   const location = useLocation();
@@ -9,15 +9,15 @@ const MainLayOutHeader = () => {
   const unreadNotifications = 3; // This will come from state later
 
   const navItems = [
-    { href: "/", icon: Home, label: "홈" },
-    { href: "/create", icon: PlusCircle, label: "작성" },
+    { href: '/', icon: Home, label: '홈' },
+    { href: '/create', icon: PlusCircle, label: '작성' },
     {
-      href: "/notifications",
+      href: '/notifications',
       icon: Bell,
-      label: "알림",
+      label: '알림',
       badge: unreadNotifications,
     },
-    { href: "/profile", icon: User, label: "프로필" },
+    { href: '/profile', icon: User, label: '프로필' },
   ];
 
   return (
@@ -40,19 +40,19 @@ const MainLayOutHeader = () => {
                   key={item.href}
                   to={item.href}
                   className={cn(
-                    "flex flex-col md:flex-row items-center gap-1 md:gap-2 px-3 py-2 rounded-lg transition-colors relative",
+                    'flex flex-col md:flex-row items-center gap-1 md:gap-2 px-3 py-2 rounded-lg transition-colors relative',
                     isActive
-                      ? "text-pink-100"
-                      : "text-brown-100 hover:text-pink-90"
+                      ? 'text-pink-100'
+                      : 'text-brown-100 hover:text-pink-90'
                   )}
                 >
                   <div className="relative">
                     <Icon
                       className={cn(
-                        "w-6 h-6",
-                        item.href === "/notification" &&
+                        'w-6 h-6',
+                        item.href === '/notification' &&
                           unreadNotifications > 0 &&
-                          "animate-bell-shake"
+                          'animate-bell-shake'
                       )}
                     />
                     {item.badge && item.badge > 0 && (
