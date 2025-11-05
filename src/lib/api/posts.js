@@ -1,4 +1,4 @@
-import { apiGet } from "./client";
+import { apiGet, apiPost } from "./client";
 import { dummyPosts } from "@/lib/dummyData";
 
 // Map server post -> app post shape with safe fallbacks
@@ -39,5 +39,15 @@ export async function list() {
   }
 }
 
-const postsApi = { list };
+export async function create(payload) {
+  // payload expected: { content, font, color }
+  const data = await apiPost("/posts", payload);
+  // Some APIs return created resource; if so, map it; else, return minimal merged object
+  if (data && (data.id || data.postId || data.content || data.introduction)) {
+    return mapPost(data);
+  }
+  return { ...payload };
+}
+
+const postsApi = { list, create };
 export default postsApi;
