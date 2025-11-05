@@ -2,35 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Local fonts (existing) */
 @font-face {
-  font-family: 'memomentKkukkkuk';
-  src: url('./assets/fonts/memomentKkukkkuk.ttf') format('truetype'),
-       url('./assets/fonts/memomentKkukkkuk.otf') format('opentype');
+  font-family: "memomentKkukkkuk";
+  src: url("./assets/fonts/memomentKkukkkuk.ttf") format("truetype"),
+    url("./assets/fonts/memomentKkukkkuk.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: '온글잎 콘콘체';
-  src: url('./assets/fonts/온글잎 콘콘체.ttf') format('truetype');
+  font-family: "온글잎 콘콘체";
+  src: url("./assets/fonts/온글잎 콘콘체.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'SandollSamlipHobbangBasic';
+  font-family: "SandollSamlipHobbangBasic";
   /* local fallback first (preferred), then CDN woff as fallback */
-  src: url('./assets/fonts/SDSamliphopangcheTTFBasic.ttf') format('truetype'),
-     url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff') format('woff');
+  src: url("./assets/fonts/SDSamliphopangcheTTFBasic.ttf") format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff")
+      format("woff");
   font-weight: normal;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'GowunDodum-Regular';
-  src: url('./assets/fonts/GowunDodum-Regular.ttf') format('truetype');
+  font-family: "GowunDodum-Regular";
+  src: url("./assets/fonts/GowunDodum-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Web fonts (Noonnu CDN) */
+@font-face {
+  font-family: "Dahaeng";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_02@1.0/Daheng.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DongwhaTtobbok";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_03@1.0/Fairytale_ddobak.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NotGothicButGoding";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_05@1.0/Gothic_Goding.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GaramYeonGeot";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_04@1.0/Garam.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;

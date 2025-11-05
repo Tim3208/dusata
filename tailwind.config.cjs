@@ -37,6 +37,13 @@ module.exports = {
           6: "#4a4a4a",
         },
       },
+      fontFamily: {
+        Pretendard: ["Pretendard", "sans-serif"],
+        Dahaeng: ["Dahaeng", "sans-serif"],
+        DongwhaTtobbok: ["DongwhaTtobbok", "sans-serif"],
+        NotGothicButGoding: ["NotGothicButGoding", "sans-serif"],
+        GaramYeonGeot: ["GaramYeonGeot", "sans-serif"],
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
