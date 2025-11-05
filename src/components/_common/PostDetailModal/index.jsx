@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const colorClasses = {
-  yellow: "bg-yellow-100",
-  pink: "bg-pink-100",
+  Yellow: "bg-yellow-100",
+  Pink: "bg-pink-100",
 };
 
 const PostDetailModal = ({

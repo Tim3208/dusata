@@ -4,8 +4,8 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const colorClasses = {
-  yellow: "bg-yellow-100",
-  pink: "bg-pink-100",
+  Yellow: "bg-yellow-100",
+  Pink: "bg-pink-100",
 };
 
 const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
@@ -70,7 +70,7 @@ const PostCard = ({ post, currentUserId, onLike, onClick, onView }) => {
         "aspect-square p-2 md:p-6 shadow-md transition-all duration-300",
         "hover:-translate-y-1 hover:rotate-0 cursor-pointer",
         "border-none flex flex-col",
-        colorClasses[post.color]
+        post.color ? colorClasses[post.color] : "bg-yellow-100"
       )}
       onClick={handleView}
     >
