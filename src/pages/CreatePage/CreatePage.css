@@ -11,9 +11,6 @@ html, body, #root {
 }
 
 body {
-  min-height: 100vh;
-  margin: 0;
-  padding-top: 50px;
   background-color: var(--bg-cream, #fdf8f0);
 }
 
@@ -21,38 +18,55 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
-  padding-bottom: 129px;
+  padding: 40px 16px 120px;
   width: 100%;
-  font-family: 'Pretendard', sans-serif;
+  box-sizing: border-box;
 }
 
 .Create_container {
-  width: 700px;
+  width: 100%;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  gap: 24px;
 }
 
 .Create_header {
   font-weight: 700;
-  font-size: 48px;
+  font-size: clamp(24px, 5vw, 48px);
   color: #000;
   text-align: left;
-  margin-bottom: 24px;
 }
 
 .Create_select {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 24px;
+  gap: 40px;
+  margin-bottom: 12px;
+}
+
+.Create_color_group,
+.Create_font_group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Create_color,
+.Create_font,
+.Create_post {
+  font-weight: 500;
+  font-size: clamp(18px, 4vw, 28px);
+  color: var(--brown-200, #7C6F61);
 }
 
 .Create_buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 .Create_buttons button {
@@ -65,22 +79,8 @@ body {
 
 .Create_font_group .Create_buttons button {
   width: auto;
-  padding: 5px 10px;
-  font-size: 16px;
-}
-
-.Create_font_group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.Create_color,
-.Create_font,
-.Create_post {
-  font-weight: 500;
-  font-size: 32px;
-  color: var(--brown-200, #7C6F61);
+  padding: 6px 12px;
+  font-size: clamp(14px, 2vw, 18px);
 }
 
 .Create_preview {
@@ -90,27 +90,27 @@ body {
 }
 
 .Create_textarea {
-  width: 700px;
-  height: 580px;
+  width: 100%;
+  height: 60vh;
+  min-height: 280px;
   border-radius: 12px;
   resize: none;
-  font-size: 32px;
+  font-size: clamp(16px, 2.5vw, 28px);
   border: 1px solid var(--brown-200, #7C6F61);
-  padding-top: 44px;
-  padding-left: 42px;
+  padding: 24px 20px;
   box-sizing: border-box;
   line-height: 1.4;
+  background-color: #fff;
 }
 
 .Create_textarea:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(81, 203, 238, 1);
-  border-color: #51cbee;
+  box-shadow: 0 0 8px rgb(168, 168, 168);
 }
 
 .Create_textarea::placeholder {
   font-weight: 500;
-  font-size: 32px;
+  font-size: clamp(16px, 2vw, 28px);
   color: var(--brown-200, #7C6F61);
   opacity: 0.8;
 }
@@ -119,23 +119,25 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 700px;
-  margin-top: 20px;
+  gap: 16px;
+  width: 100%;
+  margin-top: 16px;
 }
 
 .Create_cancel,
 .Create_complete {
-  width: 337px;
-  height: 71px;
+  flex: 1;
+  height: 64px;
   border-radius: 8px;
   font-weight: 500;
-  font-size: 32px;
+  font-size: clamp(16px, 3vw, 28px);
 }
 
 .Create_cancel {
   background-color: white;
   border: 1px solid var(--brown-200, #7C6F61);
   color: black;
+  transition: background-color 0.2s ease;
 }
 
 .Create_cancel:hover {
@@ -144,22 +146,69 @@ body {
 
 @media (max-width: 900px) {
   .Create_container {
-    width: 90vw;
+    width: 95vw;
   }
 
   .Create_select {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
   }
 
-  .Create_button {
+  .Create_font_group {
+    display: flex;
     flex-direction: column;
-    gap: 16px;
-    width: 100%;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .Create_buttons button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .Create_font_group .Create_buttons button {
+    padding: 4px 8px;
+    font-size: 14px;
   }
 
   .Create_textarea {
-    width: 100%;
+    width: 95vw;
+    height: 400px;
+    font-size: 24px;
+    padding: 24px;
   }
+
+  .Create_button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95vw;
+    gap: 8px;
+  }
+
+  .Create_cancel,
+  .Create_complete {
+    width: 48%;
+    height: 60px;
+    font-size: 20px;
+  }
+
+  .Create_header {
+    font-size: 32px;
+  }
+
+  .Create_color,
+  .Create_font,
+  .Create_post {
+    font-size: 24px;
+  }
+}
+
+/* ===== 폰트 상속 방지 ===== */
+textarea, input, button {
+  font-family: unset;
 }

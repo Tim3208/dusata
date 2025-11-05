@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'memomentKkukkkuk';
+  src: url('./assets/fonts/memomentKkukkkuk.ttf') format('truetype'),
+       url('./assets/fonts/memomentKkukkkuk.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '온글잎 콘콘체';
+  src: url('./assets/fonts/온글잎 콘콘체.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SandollSamlipHobbangBasic';
+  /* local fallback first (preferred), then CDN woff as fallback */
+  src: url('./assets/fonts/SDSamliphopangcheTTFBasic.ttf') format('truetype'),
+     url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+
+/* Outline variant removed per request; only basic variant is used for C 버튼 */
+
+@font-face {
+  font-family: 'GowunDodum-Regular';
+  src: url('./assets/fonts/GowunDodum-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
