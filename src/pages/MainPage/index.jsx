@@ -1,22 +1,50 @@
 import MainLayOut from "@/layout/MainLayOut";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PostCard from "@/components/_common/PostCard";
 import PostDetailModal from "@/components/_common/PostDetailModal";
-import { dummyPosts, dummyUsers } from "@/lib/dummyData";
+// import { dummyPosts, dummyUsers } from "@/lib/dummyData";
 import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
+import postsApi from "@/lib/api/posts";
+import { useNavigate } from "react-router-dom";
 
 const getRandomRotation = () => {
   return Math.random() * 8 - 4;
 };
 
 const MainPage = () => {
-  const [posts, setPosts] = useState(dummyPosts);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const currentUserId = "20201234"; // 실제로는 로그인한 사용자의 ID를 사용
+  const currentUserId = "20201234"; // TODO: 실제 로그인 사용자 ID로 교체
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        setLoading(true);
+        const list = await postsApi.list();
+        if (mounted) setPosts(list);
+      } catch (e) {
+        if (mounted) setError(e?.message || "failed to load");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handlePostClick = (post) => {
+    const isLoggedIn = true; // TODO: 실제 인증 상태로 교체
+    if (!isLoggedIn) {
+      navigate("/login", { replace: true, state: { from: location.pathname } });
+      return;
+    }
     setSelectedPost(post);
     setIsModalOpen(true);
   };
@@ -69,31 +97,44 @@ const MainPage = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 place-items-center">
-            {posts.map((post, index) => (
-              <div
-                key={post.postId}
-                className="w-full max-w-[280px] transform transition-transform hover:z-10"
-                style={{
-                  transform: `rotate(${getRandomRotation()}deg)`,
-                }}
-              >
-                <div className="hover:scale-105 transition-transform duration-200">
-                  <PostCard
-                    post={post}
-                    currentUserId={dummyUsers.studentId}
-                    onClick={() => handlePostClick(post)}
-                  />
+          {loading && (
+            <div className="text-center text-sm text-gray-500">
+              불러오는 중…
+            </div>
+          )}
+          {error && !loading && (
+            <div className="text-center text-sm text-red-500">
+              목록을 불러오지 못했습니다.
+            </div>
+          )}
+          {!loading && !error && (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 place-items-center">
+              {posts.map((post) => (
+                <div
+                  key={post.postId}
+                  className="w-full max-w-[280px] transform transition-transform hover:z-10"
+                  style={{
+                    transform: `rotate(${getRandomRotation()}deg)`,
+                  }}
+                >
+                  <div className="hover:scale-105 transition-transform duration-200">
+                    <PostCard
+                      post={post}
+                      currentUserId={currentUserId}
+                      onClick={() => handlePostClick(post)}
+                      onView={() => handlePostView(post.postId)}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
 
       <PostDetailModal
         post={selectedPost}
-        currentUserId={dummyUsers.studentId}
+        currentUserId={currentUserId}
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
       />

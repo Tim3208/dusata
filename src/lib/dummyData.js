@@ -88,7 +88,7 @@ export const dummyPosts = [
     instagram: 'jieun_lee',
     kakao: 'jieun21',
     phone: '',
-    font: 'Pretendard',
+    font: 'Dahaeng',
     color: 'pink',
     introduction: '카페 투어 좋아해요 ☕️ 같이 카페 탐방하실 분 구해요!',
     bookmarkCount: 25,
@@ -106,7 +106,7 @@ export const dummyPosts = [
     instagram: '',
     kakao: 'junho_park',
     phone: '010-3456-7890',
-    font: 'Pretendard',
+    font: 'DongwhaTtobbok',
     color: 'yellow',
     introduction:
       '이번 주말에 영화 보러 갈 사람 구해요~ 액션 영화 좋아하시는 분!',
@@ -125,7 +125,7 @@ export const dummyPosts = [
     instagram: 'minsu_kim',
     kakao: 'minsu22',
     phone: '010-1234-5678',
-    font: 'Pretendard',
+    font: 'NotGothicButGoding',
     color: 'pink',
     introduction:
       '게임과 음악을 좋아하는 컴공과 학생입니다! 취미가 비슷하신 분 연락주세요 🎮🎵',

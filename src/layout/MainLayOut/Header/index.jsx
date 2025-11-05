@@ -7,6 +7,10 @@ const MainLayOutHeader = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const navigate = useNavigate();
+  // 로그인 확인을 강제할지 제어하는 플래그
+  // true면 보호 라우트에 접근하기 전에 localStorage의 'token'을 확인합니다.
+  // false면 아무 검사 없이 라우팅이 진행됩니다.
+  const checkLogin = false;
   const unreadNotifications = 3; // This will come from state later
 
   const navItems = [
@@ -41,9 +45,9 @@ const MainLayOutHeader = () => {
                   key={item.href}
                   to={item.href}
                   onClick={(e) => {
-                    // 보호가 필요한 라우트는 여기서 토큰 체크 후 로그인으로 리다이렉트
+                    // checkLogin이 true일 때만 보호 라우트에 대해 토큰 체크를 수행
                     const protectedRoutes = ['/create', '/profile'];
-                    if (protectedRoutes.includes(item.href)) {
+                    if (checkLogin && protectedRoutes.includes(item.href)) {
                       const token = localStorage.getItem('token');
                       if (!token) {
                         alert('로그인이 필요합니다.');
@@ -52,6 +56,7 @@ const MainLayOutHeader = () => {
                         navigate('/login');
                       }
                     }
+                    // checkLogin이 false면 아무 작업 없이 기본 라우팅이 진행됩니다.
                   }}
                   className={cn(
                     'flex flex-col md:flex-row items-center gap-1 md:gap-2 px-3 py-2 rounded-lg transition-colors relative',
