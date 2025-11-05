@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   X,
   Heart,
@@ -8,15 +8,9 @@ import {
   Instagram,
   Phone,
   MessageCircle,
+  VenusAndMars,
 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
 const colorClasses = {
@@ -24,76 +18,112 @@ const colorClasses = {
   pink: "bg-pink-100",
 };
 
-export function PostDetailModal({
+const PostDetailModal = ({
   post,
   currentUserId,
   open,
   onOpenChange,
   onLike,
-}) {
-  const [isLiked, setIsLiked] = useState(
-    post?.likedBy.includes(currentUserId) ?? false
+}) => {
+  // 안전한 초기값 (post가 null/undefined일 수 있으므로 접근 방지)
+  const [isLiked, setIsLiked] = useState(() =>
+    Boolean(post?.likedBy?.includes?.(currentUserId))
   );
-  const [likes, setLikes] = useState(post?.likes ?? 0);
+  const [likeCount, setLikeCount] = useState(() => post?.likeCount ?? 0);
+  const [hasViewed, setHasViewed] = useState(() => {
+    try {
+      const viewed = JSON.parse(localStorage.getItem("viewedPosts") || "{}");
+      return Boolean(post && viewed[post.postId]);
+    } catch {
+      return false;
+    }
+  });
+  const [viewCount, setViewCount] = useState(() => post?.clickCount ?? 0);
 
-  if (!post) return null;
+  // ESC 키로 닫기
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (open && e.key === "Escape") {
+        onOpenChange(false);
+      }
+    };
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-    setLikes(isLiked ? likes - 1 : likes + 1);
-    onLike?.(post.id);
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [open, onOpenChange]);
+
+  // post 또는 currentUserId가 바뀔 때 내부 상태를 동기화
+  useEffect(() => {
+    setIsLiked(Boolean(post?.likedBy?.includes?.(currentUserId)));
+    setLikeCount(post?.likeCount ?? 0);
+    setViewCount(post?.clickCount ?? 0);
+    try {
+      const viewed = JSON.parse(localStorage.getItem("viewedPosts") || "{}");
+      setHasViewed(Boolean(post && viewed[post.postId]));
+    } catch {
+      setHasViewed(false);
+    }
+  }, [post, currentUserId]);
+
+  // 모달이 열려있지 않거나 post가 없으면 렌더링 중단
+  if (!open || !post) return null;
+
+  const handleLike = (e) => {
+    e?.stopPropagation();
+    const nextLiked = !isLiked;
+    setIsLiked(nextLiked);
+    setLikeCount((c) => (nextLiked ? c + 1 : Math.max(0, c - 1)));
+    // 부모 컴포넌트에 좋아요 토글 알림 (알림 생성은 부모에서 처리)
+    onLike?.(post.postId, nextLiked, currentUserId);
   };
 
-  const getInitials = (name) => {
-    return name.charAt(0);
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onOpenChange(false);
+    }
   };
-
-  const { author } = post;
-  const { privacySettings } = author;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
-        {/* Post-it style header */}
-        <div className={cn("p-6 pb-4", colorClasses[post.color])}>
-          <DialogHeader>
-            <DialogTitle className="sr-only">포스트 상세</DialogTitle>
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <Avatar className="w-12 h-12 border-2 border-current">
-                  <AvatarFallback className="text-lg font-bold">
-                    {getInitials(author.displayName)}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-bold text-lg">
-                    {privacySettings.showName ? author.displayName : "익명"}
-                  </p>
-                  <p className="text-sm opacity-70">
-                    {author.gender === "male" ? "남성" : "여성"}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8"
-                onClick={() => onOpenChange(false)}
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-          </DialogHeader>
+    <div
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 animate-in fade-in-0"
+      onClick={handleOverlayClick}
+    >
+      <div
+        className={cn(
+          "relative bg-white w-full max-w-[400px] max-h-[90vh] overflow-y-auto",
+          "rounded-lg shadow-xl",
+          "animate-in zoom-in-95 duration-200"
+        )}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <div className="relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-0 top-0 h-8 w-8"
+            onClick={() => onOpenChange(false)}
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
 
+        {/* Post-it */}
+        <div
+          className={cn(
+            "p-6 pb-4 min-h-[300px] flex flex-col",
+            colorClasses[post.color]
+          )}
+        >
           {/* Bio */}
-          <div className="mt-4">
+          <div className="flex-grow my-6">
             <p className="text-base leading-relaxed whitespace-pre-wrap">
-              {post.content}
+              {post.introduction}
             </p>
           </div>
 
           {/* Like button */}
-          <div className="flex items-center gap-2 mt-4 pt-4 border-t border-current/20">
+          <div className="flex items-center gap-2 pt-4 border-t border-current/20">
             <Button
               variant="ghost"
               size="sm"
@@ -106,7 +136,7 @@ export function PostDetailModal({
                   isLiked && "fill-current animate-heart-bounce"
                 )}
               />
-              <span className="font-medium">{likes}</span>
+              <span className="font-medium">{likeCount}</span>
             </Button>
             <span className="text-xs opacity-60 ml-auto">
               {new Date(post.createdAt).toLocaleDateString("ko-KR", {
@@ -121,72 +151,72 @@ export function PostDetailModal({
         </div>
 
         {/* Detailed info section */}
-        <div className="p-6 space-y-4 bg-background">
-          <h3 className="font-bold text-lg mb-4">상세 정보</h3>
-
+        <div className="pt-0 pb-6 px-6 space-y-4 bg-white">
+          <h3 className="font-bold text-lg my-4">상세 정보</h3>
           <div className="space-y-3">
             {/* Basic Info */}
-            <div className="flex items-center gap-3 text-sm">
-              <User className="h-4 w-4 text-muted-foreground" />
-              <span className="text-muted-foreground">이름:</span>
-              <span className="font-medium">
-                {privacySettings.showName ? author.displayName : "비공개"}
+            <div className="flex items-center gap-1 text-sm">
+              <User className="h-4 w-4 text-brown-80" />
+              <span className="text-brown-80">이름:</span>
+              <span className="ml-1 font-medium">
+                {post.showName ? post.name : "비공개"}
               </span>
             </div>
 
-            <div className="flex items-center gap-3 text-sm">
-              <GraduationCap className="h-4 w-4 text-muted-foreground" />
-              <span className="text-muted-foreground">학과:</span>
-              <span className="font-medium">
-                {privacySettings.showMajor ? author.major : "비공개"}
+            <div className="flex items-center gap-1 text-sm">
+              <User className="h-4 w-4 text-brown-80" />
+              <span className="text-brown-80">성별:</span>
+              <span className="ml-1 font-medium">
+                {post.showName ? post.name : "비공개"}
               </span>
             </div>
 
-            <div className="flex items-center gap-3 text-sm">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span className="text-muted-foreground">학년:</span>
-              <span className="font-medium">
-                {privacySettings.showYear ? `${author.year}학년` : "비공개"}
+            <div className="flex items-center gap-1 text-sm">
+              <GraduationCap className="h-4 w-4 text-brown-80" />
+              <span className="text-brown-80">학과:</span>
+              <span className="ml-1 font-medium">
+                {post.showDepartment ? post.department : "비공개"}
               </span>
             </div>
 
-            <div className="flex items-center gap-3 text-sm">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span className="text-muted-foreground">나이:</span>
-              <span className="font-medium">
-                {privacySettings.showAge ? `${author.age}세` : "비공개"}
+            <div className="flex items-center gap-1 text-sm">
+              <Calendar className="h-4 w-4 text-brown-80" />
+              <span className="text-brown-80">학년:</span>
+              <span className="ml-1 font-medium">
+                {post.showGrade ? `${post.grade}학년` : "비공개"}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1 text-sm">
+              <Calendar className="h-4 w-4 text-brown-80" />
+              <span className="text-brown-80">나이:</span>
+              <span className="ml-1 font-medium">
+                {post.showBirth ? `${post.age}세` : "비공개"}
               </span>
             </div>
 
             {/* Contact Info */}
-            {author.instagramId && (
-              <div className="flex items-center gap-3 text-sm">
-                <Instagram className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">인스타:</span>
-                <span className="font-medium">@{author.instagramId}</span>
+            {post.instagram && post.showInstagram && (
+              <div className="flex items-center gap-1 text-sm">
+                <Instagram className="h-4 w-4 text-brown-80" />
+                <span className="text-brown-80">인스타:</span>
+                <span className="ml-1 font-medium">@{post.instagram}</span>
               </div>
             )}
 
-            {author.kakaoId && (
-              <div className="flex items-center gap-3 text-sm">
-                <MessageCircle className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">카톡:</span>
-                <span className="font-medium">{author.kakaoId}</span>
+            {post.kakao && post.showKakao && (
+              <div className="flex items-center gap-1 text-sm">
+                <MessageCircle className="h-4 w-4 text-brown-80" />
+                <span className="text-brown-80">카톡:</span>
+                <span className="ml-1 font-medium">{post.kakao}</span>
               </div>
             )}
 
-            {author.phoneNumber && (
-              <div className="flex items-center gap-3 text-sm">
-                <Phone className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">전화번호:</span>
-                <span className="font-medium">{author.phoneNumber}</span>
-              </div>
-            )}
-
-            {author.bio && (
-              <div className="pt-3 border-t">
-                <p className="text-sm text-muted-foreground mb-2">자기소개</p>
-                <p className="text-sm leading-relaxed">{author.bio}</p>
+            {post.phone && post.showPhone && (
+              <div className="flex items-center gap-1 text-sm">
+                <Phone className="h-4 w-4 text-brown-80" />
+                <span className="text-brown-80">전화번호:</span>
+                <span className="ml-1 font-medium">{post.phone}</span>
               </div>
             )}
           </div>
@@ -196,12 +226,11 @@ export function PostDetailModal({
             <Button className="flex-1 bg-accent hover:bg-accent/90">
               관심 표시하기
             </Button>
-            <Button variant="outline" className="flex-1 bg-transparent">
-              신고하기
-            </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
-}
+};
+
+export default PostDetailModal;
