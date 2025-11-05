@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables synced with Tailwind custom colors */
+:root {
+  /* Pink */
+  --pink-main-100: #ffaef2;
+  --pink-main-90: #ffcbfa;
+  --pink-main-80: #fad5f2;
+  /* Yellow */
+  --yellow-main-100: #ffee8e;
+  /* Backgrounds */
+  --bg-primary: #fbf8f1;
+  /* Browns */
+  --brown-100: #2b1e1c;
+  --brown-80: #7c6f61;
+  /* Accent/alerts */
+  --red-point: #f14d4c;
+  /* Neutrals */
+  --white: #ffffff;
+  --navy: #111827;
+  --primary: #111827;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #111827;
+  --destructive: #f14d4c;
+  --destructive-foreground: #ffffff;
+  --ring: #e5e7eb;
+  --foreground: #111827;
+  --gray-5: #757575;
+  --gray-6: #4a4a4a;
+}
+
 /* Local fonts (existing) */
 @font-face {
   font-family: 'memomentKkukkkuk';

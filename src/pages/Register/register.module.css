@@ -2,14 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--bg-primary); 
+  background: var(--bg-primary);
 }
 
 .title {
   text-align: center;
   font-size: 48px;
   font-weight: 700;
-  color: var(--pink-main-100 );
+  color: var(--pink-main-100);
 }
 
 .subtitle {
@@ -18,13 +18,15 @@
   margin-bottom: 45px;
   color: var(--brown-80);
 }
-.label{
-    font-size: 16px;
-    color: var(--brown-80);
+
+.label {
+  font-size: 16px;
+  color: var(--brown-80);
 }
+
 .input {
   width: 100%;
-  height:35px;
+  height: 35px;
   padding: 16px;
   border-radius: 8px;
   border: 0.75px solid var(--brown-80);
@@ -33,12 +35,11 @@
 }
 
 .select {
-  width: 100%;
   height: 40px;
   padding: 0 12px;
-  border-radius: 8px 12px;
+  border-radius: 8px;
   border: 1px solid var(--brown-80);
-  background:var(--white);
+  background: var(--white);
   font-size: 16px;
   margin-bottom: 16px;
   display: block;
@@ -46,12 +47,21 @@
   appearance: auto;
 }
 
+.card {
+  background: var(--white);
+  border: 0.75px solid var(--brown-80);
+  margin: 1rem;
+  max-width: 600px;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
 .arrow {
   position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none; 
+  pointer-events: none;
   font-size: 14px;
   color: var(--brown-80);
 }
@@ -61,13 +71,14 @@
   height: 50px;
   padding: 10px;
   border-radius: 8px;
+  text-align: center;
+  line-height: 24px;
   border: none;
   background: var(--pink-main-80);
   font-size: 24px;
   cursor: pointer;
-  margin-top: 24px;
+  margin: 24px 0 48px 0;
   color: var(--brown-80);
-
 }
 
 .button:hover {
@@ -75,11 +86,10 @@
 }
 
 .error {
-  color: var(--red);
+  color: var(--red-point);
   font-size: 12px;
   margin-top: 8px;
 }
-
 
 .loginText {
   margin-top: 10px;

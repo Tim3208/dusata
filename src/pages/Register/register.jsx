@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./register.module.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './register.module.css';
 
 export default function SignupForm() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    studentId: "",
-    password: "",
-    confirmPassword: "",
-    name: "",
-    gender: "",
-    major: "",
-    grade: "",
-    birth: "",
+    studentId: '',
+    password: '',
+    confirmPassword: '',
+    name: '',
+    gender: '',
+    major: '',
+    grade: '',
+    birth: '',
   });
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setError(""); // 입력 시 기존 에러 초기화
+    setError(''); // 입력 시 기존 에러 초기화
   };
 
   const handleSubmit = async (e) => {
@@ -37,30 +37,32 @@ export default function SignupForm() {
       !form.grade ||
       !form.birth
     ) {
-      setError("모든 필수 항목을 입력해주세요.");
+      setError('모든 필수 항목을 입력해주세요.');
       return;
     }
 
     // 비밀번호 확인
     if (form.password !== form.confirmPassword) {
-      setError("비밀번호가 일치하지 않습니다.");
+      setError('비밀번호가 일치하지 않습니다.');
       return;
     }
 
     try {
       // 학번 중복체크
-      const checkId = await fetch("/api/join/checkId?studentId=" + form.studentId);
+      const checkId = await fetch(
+        '/api/join/checkId?studentId=' + form.studentId
+      );
       const checkResult = await checkId.json();
 
       if (!checkResult.available) {
-        setError("이미 사용 중인 학번입니다.");
+        setError('이미 사용 중인 학번입니다.');
         return;
       }
 
       // 회원가입 API 호출
-      const res = await fetch("/api/join/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/join/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.name,
           studentId: form.studentId,
@@ -68,14 +70,14 @@ export default function SignupForm() {
           department: form.major,
           birthDate: form.birth,
           sex:
-            form.gender === "male"
-              ? "MALE"
-              : form.gender === "female"
-              ? "FEMALE"
-              : "ETC",
-          instagram: "",
-          kakao: "",
-          phone: "",
+            form.gender === 'male'
+              ? 'MALE'
+              : form.gender === 'female'
+              ? 'FEMALE'
+              : 'ETC',
+          instagram: '',
+          kakao: '',
+          phone: '',
           password: form.password,
         }),
       });
@@ -83,11 +85,11 @@ export default function SignupForm() {
       const data = await res.json();
       console.log(data);
 
-      alert("회원가입 완료!");
-      navigate("/login"); // 회원가입 후 로그인 페이지 이동
+      alert('회원가입 완료!');
+      navigate('/login'); // 회원가입 후 로그인 페이지 이동
     } catch (err) {
       console.error(err);
-      setError("회원가입 중 오류가 발생했습니다.");
+      setError('회원가입 중 오류가 발생했습니다.');
     }
   };
 
@@ -102,6 +104,7 @@ export default function SignupForm() {
           type="text"
           name="studentId"
           className={styles.input}
+          placeholder="2025000000"
           onChange={handleChange}
         />
 
@@ -124,6 +127,7 @@ export default function SignupForm() {
         <label className={styles.label}>이름</label>
         <input
           type="text"
+          placeholder="홍길동"
           name="name"
           className={styles.input}
           onChange={handleChange}
@@ -195,15 +199,19 @@ export default function SignupForm() {
 
         {error && <p className={styles.error}>{error}</p>}
 
+        <hr />
+
         <button type="submit" className={styles.button}>
           회원가입
         </button>
 
         <p className={styles.loginText}>
-          이미 계정이 있으신가요? <span className={styles.loginLink} onClick={() => navigate("/login")}>로그인</span>
+          이미 계정이 있으신가요?{' '}
+          <span className={styles.loginLink} onClick={() => navigate('/login')}>
+            로그인
+          </span>
         </p>
       </form>
     </div>
   );
 }
-

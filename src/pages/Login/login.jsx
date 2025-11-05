@@ -44,7 +44,7 @@ export default function Login() {
 
       alert('로그인 성공!');
 
-      navigate('/create');
+      navigate('/');
     } catch (err) {
       setError('서버 오류! 잠시 후 다시 시도해주세요.');
     }
