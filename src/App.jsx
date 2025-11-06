@@ -6,6 +6,7 @@ import Login from './pages/Login/login.jsx';
 import Register from './pages/Register/register.jsx';
 import CreatePage from './pages/CreatePage/CreatePage.jsx';
 import MyPage from './pages/MyPage/mypage.jsx';
+import NotificationPage from './pages/NotificationPage/NotificationPage.jsx';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreatePage />} />
+        <Route path="/notification" element={<NotificationPage />} />
         <Route path="/profile" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
