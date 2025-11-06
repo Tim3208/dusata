@@ -42,6 +42,18 @@ export default function SignupForm() {
       return;
     }
 
+    // 학번 유효성 검사: 9~11자리 숫자
+    if (!/^\d{9,11}$/.test(form.studentId)) {
+      setError('학번은 9~11자리 숫자여야 합니다.');
+      return;
+    }
+
+    // 이름 유효성 검사: 2~4글자
+    if (form.name.length < 2 || form.name.length > 4) {
+      setError('이름은 2~4글자여야 합니다.');
+      return;
+    }
+
     // 비밀번호 확인
     if (form.password !== form.confirmPassword) {
       setError('비밀번호가 일치하지 않습니다.');

@@ -2,7 +2,6 @@ import MainLayOut from '@/layout/MainLayOut';
 import { useState, useEffect } from 'react';
 import PostCard from '@/components/_common/PostCard';
 import PostDetailModal from '@/components/_common/PostDetailModal';
-// import { dummyPosts, dummyUsers } from "@/lib/dummyData";
 import { Button } from '@/components/ui/button';
 import { Filter } from 'lucide-react';
 import postsApi from '@/lib/api/posts';
@@ -60,21 +59,6 @@ const MainPage = () => {
     }
     setSelectedPost(post);
     setIsModalOpen(true);
-  };
-
-  const handlePostLike = (postId, isLiked) => {
-    // 실제로는 API 호출을 통해 서버에 좋아요 상태를 업데이트
-    const notification = {
-      id: `notif-${Date.now()}`,
-      userId: posts.find((p) => p.postId === postId)?.studentId,
-      type: 'like',
-      fromUserId: currentUserId,
-      postId: postId,
-      message: `${currentUserId}님이 회원님의 게시물을 좋아합니다`,
-      read: false,
-      createdAt: new Date().toISOString(),
-    };
-    console.log('새로운 알림:', notification);
   };
 
   const handlePostView = async (postId) => {
